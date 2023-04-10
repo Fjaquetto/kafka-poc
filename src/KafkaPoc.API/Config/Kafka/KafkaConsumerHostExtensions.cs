@@ -9,7 +9,7 @@ namespace KafkaPoc.API.Config.Kafka
 {
     public static class KafkaConsumerHostExtensions
     {
-        public static async Task StartConsumer(IServiceProvider services, IHostEnvironment environment, string topic)
+        public static async Task StartConsumer(IServiceProvider services, string topic)
         {
             var consumerService = services.GetRequiredService<IKafkaConsumerService>();
             var mediator = services.GetRequiredService<IMediator>();
@@ -18,15 +18,7 @@ namespace KafkaPoc.API.Config.Kafka
             await Task.Run(() =>
                 consumerService.ConsumeAsync(topic, async message =>
                 {
-                    switch (topic)
-                    {
-                        case "product_created":
-                            var product = JsonConvert.DeserializeObject<Product>(message);
-                            await mediator.Publish(new ProductCreatedEvent(product));
-                            break;
-                        default:
-                            throw new InvalidOperationException($"Unknown topic: {topic}");
-                    }
+
                 }, cancellationTokenSource.Token));
         }
     }

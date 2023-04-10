@@ -18,4 +18,8 @@
     <ProjectReference Include="..\KafkaPoc.Domain\KafkaPoc.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Application\Events\SubscribeEvents\" />
+  </ItemGroup>
+
 </Project>

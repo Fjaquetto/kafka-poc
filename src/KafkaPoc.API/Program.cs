@@ -32,9 +32,10 @@ app.MapControllers();
 
 // Start the Kafka consumers for the topics
 var kafkaConfig = app.Configuration.GetSection("Kafka").Get<KafkaConfig>();
-foreach (var topic in kafkaConfig.Topics)
-{
-    Task.Run(() => KafkaConsumerHostExtensions.StartConsumer(app.Services, app.Environment, topic));
-}
+if (kafkaConfig.Topics != null)
+    foreach (var topic in kafkaConfig.Topics)
+    {
+        Task.Run(() => KafkaConsumerHostExtensions.StartConsumer(app.Services, topic));
+    }
 
 await app.RunAsync();

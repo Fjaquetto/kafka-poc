@@ -1,8 +1,13 @@
-﻿using KafkaPoc.API.Services.DataContracts;
+﻿using KafkaPoc.Console.Services.DataContracts;
 using MediatR;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace KafkaPoc.API.Events.EventHandlers
+namespace KafkaPoc.Console.Application.Events.EventHandlers
 {
     public class ProductCreatedEventHandler : INotificationHandler<ProductCreatedEvent>
     {
@@ -15,7 +20,7 @@ namespace KafkaPoc.API.Events.EventHandlers
 
         public async Task Handle(ProductCreatedEvent notification, CancellationToken cancellationToken)
         {
-            await _producerService.ProduceAsync("product_created", JsonConvert.SerializeObject(notification.Product));
+            System.Console.WriteLine(JsonConvert.SerializeObject(notification));
         }
     }
 }

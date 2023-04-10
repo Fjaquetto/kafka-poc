@@ -1,4 +1,4 @@
-﻿using KafkaPoc.API.Events;
+﻿using KafkaPoc.API.Application.Events.Output;
 using KafkaPoc.Domain.Models;
 using MediatR;
 

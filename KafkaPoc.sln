@@ -3,11 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32901.215
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KafkaPoc.API", "src\KafkaPoc.API\KafkaPoc.API.csproj", "{1F6B6833-F724-48E6-B02E-66E8F1364ACE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KafkaPoc.API", "src\KafkaPoc.API\KafkaPoc.API.csproj", "{1F6B6833-F724-48E6-B02E-66E8F1364ACE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KafkaPoc.Domain", "src\KafkaPoc.Domain\KafkaPoc.Domain.csproj", "{C310668D-1C48-4A18-91E9-4F06ECC9B237}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KafkaPoc.Domain", "src\KafkaPoc.Domain\KafkaPoc.Domain.csproj", "{C310668D-1C48-4A18-91E9-4F06ECC9B237}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KafkaPoc.Infra", "src\KafkaPoc.Infra\KafkaPoc.Infra.csproj", "{8CC59D7A-A84E-4EAE-B660-0D493D952CF9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ExternalConsumer", "ExternalConsumer", "{9ECBB158-A63C-48AF-A24F-8AAF7F9138BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KafkaPoc.Console", "src\KafkaPoc.Console\KafkaPoc.Console.csproj", "{15F2DD92-BC61-4276-9B85-D464D33712BB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,9 +31,16 @@ Global
 		{8CC59D7A-A84E-4EAE-B660-0D493D952CF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8CC59D7A-A84E-4EAE-B660-0D493D952CF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8CC59D7A-A84E-4EAE-B660-0D493D952CF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15F2DD92-BC61-4276-9B85-D464D33712BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15F2DD92-BC61-4276-9B85-D464D33712BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15F2DD92-BC61-4276-9B85-D464D33712BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15F2DD92-BC61-4276-9B85-D464D33712BB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{15F2DD92-BC61-4276-9B85-D464D33712BB} = {9ECBB158-A63C-48AF-A24F-8AAF7F9138BE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {824C197F-8E06-4384-90DD-C537F7F02C22}
