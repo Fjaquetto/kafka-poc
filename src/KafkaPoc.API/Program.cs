@@ -30,13 +30,11 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-// Start the Kafka consumer for the "product_created" topic
+// Start the Kafka consumers for the topics
 var kafkaConfig = app.Configuration.GetSection("Kafka").Get<KafkaConfig>();
 foreach (var topic in kafkaConfig.Topics)
 {
-    await KafkaConsumerHostExtensions.StartConsumer(app.Services, app.Environment, topic);
+    Task.Run(() => KafkaConsumerHostExtensions.StartConsumer(app.Services, app.Environment, topic));
 }
-
-await app.RunAsync();
 
 await app.RunAsync();
