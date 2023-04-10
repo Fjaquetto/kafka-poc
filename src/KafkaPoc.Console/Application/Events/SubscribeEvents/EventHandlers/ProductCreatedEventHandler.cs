@@ -11,11 +11,8 @@ namespace KafkaPoc.Console.Application.Events.EventHandlers
 {
     public class ProductCreatedEventHandler : INotificationHandler<ProductCreatedEvent>
     {
-        private readonly IKafkaProducerService _producerService;
-
-        public ProductCreatedEventHandler(IKafkaProducerService producerService)
+        public ProductCreatedEventHandler()
         {
-            _producerService = producerService;
         }
 
         public async Task Handle(ProductCreatedEvent notification, CancellationToken cancellationToken)

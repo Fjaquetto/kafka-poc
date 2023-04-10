@@ -16,7 +16,7 @@ namespace KafkaPoc.API.Events.EventHandlers
 
         public async Task Handle(ProductCreatedEvent notification, CancellationToken cancellationToken)
         {
-            await _producerService.ProduceAsync("product_created", JsonConvert.SerializeObject(notification.Product));
+            await _producerService.ProduceAsync(nameof(ProductCreatedEvent), JsonConvert.SerializeObject(notification.Product));
         }
     }
 }

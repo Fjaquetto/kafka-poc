@@ -4,11 +4,6 @@ using KafkaPoc.Console.Services.DataContracts;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KafkaPoc.Console.Config.Kafka
 {
@@ -25,7 +20,7 @@ namespace KafkaPoc.Console.Config.Kafka
                 {
                     switch (topic)
                     {
-                        case "product_created":
+                        case nameof(ProductCreatedEvent):
                             var product = JsonConvert.DeserializeObject<Product>(message);
                             await mediator.Publish(new ProductCreatedEvent(product));
                             break;
