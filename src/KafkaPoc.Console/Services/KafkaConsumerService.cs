@@ -2,11 +2,6 @@
 using KafkaPoc.Console.Config.Kafka;
 using KafkaPoc.Console.Services.DataContracts;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KafkaPoc.Console.Services
 {

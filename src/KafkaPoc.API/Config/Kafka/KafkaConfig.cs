@@ -1,15 +1,11 @@
-﻿namespace KafkaPoc.API.Config.Kafka
+﻿using KafkaPoc.API.Application.Events.MessageHandler;
+
+namespace KafkaPoc.API.Config.Kafka
 {
     public class KafkaConfig
     {
         public string BootstrapServers { get; set; }
         public string ConsumerGroupId { get; set; }
-        public List<string> Topics { get; set; } = new List<string>();
-
-        public KafkaConfig AddTopic(string topic)
-        {
-            Topics.Add(topic);
-            return this;
-        }
+        public IList<IKafkaMessageHandler> MessageHandlers { get; set; } = new List<IKafkaMessageHandler>();
     }
 }

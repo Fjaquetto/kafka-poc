@@ -1,4 +1,6 @@
 ﻿using KafkaPoc.Console.Application.Events;
+using KafkaPoc.Console.Application.Events.EventHandlers;
+using KafkaPoc.Console.Application.Events.MessageHandler;
 using KafkaPoc.Console.Config.Kafka;
 using KafkaPoc.Console.Services;
 using KafkaPoc.Console.Services.DataContracts;
@@ -11,16 +13,11 @@ using Microsoft.Extensions.Options;
 var host = CreateHostBuilder(args).Build();
 
 // Get configuration and add topic
-var kafkaConfig = host.Services.GetRequiredService<KafkaConfig>();
-kafkaConfig
-    .AddTopic(nameof(ProductCreatedEvent));
-
-// Start Kafka consumer
-if (kafkaConfig.Topics != null)
-    foreach (var topic in kafkaConfig?.Topics) //TODO: Here we can get all names of SubscribeEvents..
-    {
-        Task.Run(() => KafkaConsumerHostExtensions.StartConsumer(host.Services, topic));
-    }
+var messageHandlers = host.Services.GetServices<IKafkaMessageHandler>();
+foreach (var handler in messageHandlers)
+{
+    Task.Run(() => KafkaConsumerHostExtensions.StartConsumer(host.Services, handler.Topic));
+}
 
 await host.RunAsync();
 
@@ -39,4 +36,6 @@ static IHostBuilder CreateHostBuilder(string[] args) =>
             services.AddMediatR(typeof(Program).Assembly);
             services.AddSingleton<IKafkaProducerService, KafkaProducerService>();
             services.AddSingleton<IKafkaConsumerService, KafkaConsumerService>();
+            services.AddTransient<IKafkaMessageHandler, ProductCreatedEventHandler>();
+
         });

@@ -1,9 +1,5 @@
-﻿using KafkaPoc.API.Events;
+﻿using KafkaPoc.API.Application.Events.MessageHandler;
 using KafkaPoc.API.Services.DataContracts;
-using KafkaPoc.Domain.Models;
-using MediatR;
-using Newtonsoft.Json;
-using System.Threading;
 
 namespace KafkaPoc.API.Config.Kafka
 {
@@ -12,14 +8,17 @@ namespace KafkaPoc.API.Config.Kafka
         public static async Task StartConsumer(IServiceProvider services, string topic)
         {
             var consumerService = services.GetRequiredService<IKafkaConsumerService>();
-            var mediator = services.GetRequiredService<IMediator>();
+            var messageHandlers = services.GetServices<IKafkaMessageHandler>();
+            var handler = messageHandlers.FirstOrDefault(h => h.Topic == topic);
             var cancellationTokenSource = new CancellationTokenSource();
 
-            await Task.Run(() =>
-                consumerService.ConsumeAsync(topic, async message =>
-                {
+            if (handler == null)
+            {
+                return;
+            }
 
-                }, cancellationTokenSource.Token));
+            await Task.Run(() =>
+                consumerService.ConsumeAsync(topic, handler.HandleMessageAsync, cancellationTokenSource.Token));
         }
     }
 }

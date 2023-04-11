@@ -1,23 +1,25 @@
-﻿using KafkaPoc.Console.Services.DataContracts;
+﻿using KafkaPoc.Console.Application.Events.MessageHandler;
+using KafkaPoc.Console.Model;
 using MediatR;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KafkaPoc.Console.Application.Events.EventHandlers
 {
-    public class ProductCreatedEventHandler : INotificationHandler<ProductCreatedEvent>
+    public class ProductCreatedEventHandler : IKafkaMessageHandler
     {
-        public ProductCreatedEventHandler()
+        private readonly IMediator _mediator;
+
+        public ProductCreatedEventHandler(IMediator mediator)
         {
+            _mediator = mediator;
         }
 
-        public async Task Handle(ProductCreatedEvent notification, CancellationToken cancellationToken)
+        public string Topic => nameof(ProductCreatedEvent);
+
+        public async Task HandleMessageAsync(string message)
         {
-            System.Console.WriteLine(JsonConvert.SerializeObject(notification));
+            var product = JsonConvert.DeserializeObject<Product>(message);
+            System.Console.WriteLine(JsonConvert.SerializeObject(message));
         }
     }
 }

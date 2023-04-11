@@ -1,9 +1,6 @@
-﻿using KafkaPoc.Console.Application.Events;
-using KafkaPoc.Console.Model;
+﻿using KafkaPoc.Console.Application.Events.MessageHandler;
 using KafkaPoc.Console.Services.DataContracts;
-using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json;
 
 namespace KafkaPoc.Console.Config.Kafka
 {
@@ -12,20 +9,17 @@ namespace KafkaPoc.Console.Config.Kafka
         public static async Task StartConsumer(IServiceProvider services, string topic)
         {
             var consumerService = services.GetRequiredService<IKafkaConsumerService>();
-            var mediator = services.GetRequiredService<IMediator>();
+            var messageHandlers = services.GetServices<IKafkaMessageHandler>();
+            var handler = messageHandlers.FirstOrDefault(h => h.Topic == topic);
             var cancellationTokenSource = new CancellationTokenSource();
 
+            if (handler == null)
+            {
+                return;
+            }
+
             await Task.Run(() =>
-                consumerService.ConsumeAsync(topic, async message =>
-                {
-                    switch (topic)
-                    {
-                        case nameof(ProductCreatedEvent):
-                            var product = JsonConvert.DeserializeObject<Product>(message);
-                            await mediator.Publish(new ProductCreatedEvent(product));
-                            break;
-                    }
-                }, cancellationTokenSource.Token));
+                consumerService.ConsumeAsync(topic, handler.HandleMessageAsync, cancellationTokenSource.Token));
         }
     }
 }

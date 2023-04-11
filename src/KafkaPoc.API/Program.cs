@@ -1,7 +1,8 @@
-using KafkaPoc.API.Services.DataContracts;
-using KafkaPoc.API.Services;
-using MediatR;
+using KafkaPoc.API.Application.Events.MessageHandler;
 using KafkaPoc.API.Config.Kafka;
+using KafkaPoc.API.Services;
+using KafkaPoc.API.Services.DataContracts;
+using MediatR;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,11 +32,10 @@ app.UseAuthorization();
 app.MapControllers();
 
 // Start the Kafka consumers for the topics
-var kafkaConfig = app.Configuration.GetSection("Kafka").Get<KafkaConfig>();
-
-foreach (var topic in kafkaConfig?.Topics)
+var messageHandlers = app.Services.GetServices<IKafkaMessageHandler>();
+foreach (var handler in messageHandlers)
 {
-    Task.Run(() => KafkaConsumerHostExtensions.StartConsumer(app.Services, topic));
+    Task.Run(() => KafkaConsumerHostExtensions.StartConsumer(app.Services, handler.Topic));
 }
 
 await app.RunAsync();
