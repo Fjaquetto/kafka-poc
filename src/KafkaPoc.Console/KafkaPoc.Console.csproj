@@ -29,4 +29,10 @@
     <Folder Include="Application\Events\PublishEvents\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="Kafka.Bus">
+      <HintPath>..\..\dlls\Kafka.Bus.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

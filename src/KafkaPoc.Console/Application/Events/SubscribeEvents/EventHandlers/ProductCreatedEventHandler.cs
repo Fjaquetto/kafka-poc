@@ -1,4 +1,4 @@
-﻿using KafkaPoc.Console.Application.Events.MessageHandler;
+﻿using Kafka.Bus.Handlers;
 using KafkaPoc.Console.Model;
 using MediatR;
 using Newtonsoft.Json;

@@ -1,5 +1,5 @@
-﻿using KafkaPoc.API.Application.Events.Output;
-using KafkaPoc.API.Services.DataContracts;
+﻿using Kafka.Bus.Services.DataContracts;
+using KafkaPoc.API.Application.Events.Output;
 using MediatR;
 using Newtonsoft.Json;
 

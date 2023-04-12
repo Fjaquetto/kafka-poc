@@ -1,7 +1,7 @@
-using KafkaPoc.API.Application.Events.MessageHandler;
-using KafkaPoc.API.Config.Kafka;
-using KafkaPoc.API.Services;
-using KafkaPoc.API.Services.DataContracts;
+using Kafka.Bus.Config;
+using Kafka.Bus.Handlers;
+using Kafka.Bus.Services;
+using Kafka.Bus.Services.DataContracts;
 using MediatR;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +16,8 @@ builder.Services.AddMediatR(typeof(Program).Assembly);
 builder.Services.AddSingleton<IKafkaProducerService, KafkaProducerService>();
 builder.Services.AddSingleton<IKafkaConsumerService, KafkaConsumerService>();
 
+builder.Services.AddKafkaLibrary(builder.Configuration);
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -28,6 +30,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
 
 app.MapControllers();
 

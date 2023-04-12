@@ -1,9 +1,8 @@
-﻿using KafkaPoc.Console.Application.Events;
+﻿using Kafka.Bus.Config;
+using Kafka.Bus.Handlers;
+using Kafka.Bus.Services;
+using Kafka.Bus.Services.DataContracts;
 using KafkaPoc.Console.Application.Events.EventHandlers;
-using KafkaPoc.Console.Application.Events.MessageHandler;
-using KafkaPoc.Console.Config.Kafka;
-using KafkaPoc.Console.Services;
-using KafkaPoc.Console.Services.DataContracts;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -31,6 +30,7 @@ static IHostBuilder CreateHostBuilder(string[] args) =>
         })
         .ConfigureServices((hostContext, services) =>
         {
+            services.AddKafkaLibrary(hostContext.Configuration);
             services.Configure<KafkaConfig>(hostContext.Configuration.GetSection("Kafka"));
             services.AddSingleton(cfg => cfg.GetRequiredService<IOptions<KafkaConfig>>().Value);
             services.AddMediatR(typeof(Program).Assembly);

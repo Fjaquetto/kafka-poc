@@ -22,4 +22,10 @@
     <Folder Include="Application\Events\SubscribeEvents\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="Kafka.Bus">
+      <HintPath>..\..\dlls\Kafka.Bus.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
