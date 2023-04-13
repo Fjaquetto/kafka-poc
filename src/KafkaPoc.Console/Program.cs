@@ -11,13 +11,6 @@ using Microsoft.Extensions.Options;
 
 var host = CreateHostBuilder(args).Build();
 
-// Get configuration and add topic
-var messageHandlers = host.Services.GetServices<IKafkaMessageHandler>();
-foreach (var handler in messageHandlers)
-{
-    Task.Run(() => KafkaConsumerHostExtensions.StartConsumer(host.Services, handler.Topic));
-}
-
 await host.RunAsync();
 
 static IHostBuilder CreateHostBuilder(string[] args) =>
@@ -34,8 +27,5 @@ static IHostBuilder CreateHostBuilder(string[] args) =>
             services.Configure<KafkaConfig>(hostContext.Configuration.GetSection("Kafka"));
             services.AddSingleton(cfg => cfg.GetRequiredService<IOptions<KafkaConfig>>().Value);
             services.AddMediatR(typeof(Program).Assembly);
-            services.AddSingleton<IKafkaProducerService, KafkaProducerService>();
-            services.AddSingleton<IKafkaConsumerService, KafkaConsumerService>();
             services.AddTransient<IKafkaMessageHandler, ProductCreatedEventHandler>();
-
         });
